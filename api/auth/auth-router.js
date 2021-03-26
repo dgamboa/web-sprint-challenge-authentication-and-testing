@@ -36,7 +36,7 @@ router.post(
       the response body should include a string exactly as follows: "username taken".
   */
     const credentials = req.body;
-    const rounds = process.env.BCRYPT_ROUNDS || 1;
+    const rounds = process.env.BCRYPT_ROUNDS || 5;
     const hash = bcrypt.hashSync(credentials.password, rounds);
     credentials.password = hash;
 
