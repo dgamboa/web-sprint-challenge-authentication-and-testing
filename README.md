@@ -76,6 +76,19 @@ These goals may or may not be things you have learned in this module but they bu
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics.
 
 1. Differences between using _sessions_ or _JSON Web Tokens_ for authentication.
+  1. **Answer:** In session-based authentication, the server stores a logged in user's session and sets a cookie on the client to be sent with every request to the server. Every time the client makes a request, the server can confirm the session id on the cookie matches an active session on the server to validate the request. In JWT-based authentication, the server generates a token and sends it to the client to be stored locally. The client sends the token in the header of each request to the server. The server can check the token to validate the request. JWTs minimize server load and are therefore more scalable. They also avoid cross-domain issues that may run occur with 3rd-party cookies when APIs are served from different domains.
 2. What does `bcryptjs` do to help us store passwords in a secure manner?
+  1. **Answer:**  `bcryptjs` is a library to hash and salt passwords. A hash function converts the input value (i.e. the plain text password) into a seemingly random combination of digits. The hash cannot be reversed but given the same key (i.e. input), it will always generate the same combination of digits (i.e. pure function).
 3. How are unit tests different from integration and end-to-end testing?
+  1. **Answer:** Unit tests test a single function or unit of code, asserts an expected value and compares it to the actual value of the function. Integration tests test modules or functionality that integrates multiple units to generate a result. End-to-end tests test the full user experience of an application.
 4. How does _Test Driven Development_ change the way we write applications and tests?
+  1. **Answer:** Using TDD, we first write a test. The test should fail. Then we write the code that will make the test pass. And finally, we repeat that process. At a high level, it means writing tests before writing application functionality.
+
+
+## Procedure
+
+1. Answer interview questions
+2. Start by running the server and see what is up and down
+3. Then build the authentication functionality (npm i, pull up goby, write code)
+4. Confirm that it works and add a couple of users / authenticate them to get access to users
+5. Write tests
