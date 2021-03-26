@@ -18,6 +18,67 @@ test("sanity", () => {
 });
 
 describe("server.js", () => {
+  describe("[POST] /api/auth/register", () => {
+    it("[1] creates a new user", async () => {
+      await request(server)
+        .post("/api/auth/register")
+        .send({ username: "roger", password: "1234" });
+      const roger = await db("users").where("username", "roger").first();
+      expect(roger).toMatchObject({ username: "roger" });
+    });
+    it("[2] saves password as hash rather than plain text", async () => {
+      await request(server)
+        .post("/api/auth/register")
+        .send({ username: "sammy", password: "1234" });
+      const sammy = await db("users").where("username", "sammy").first();
+      expect(bcrypt.compareSync("1234", sammy.password)).toBeTruthy();
+    });
+    it("[3] responds with the right status on successful registration", async () => {
+      const res = await request(server)
+        .post("/api/auth/register")
+        .send({ username: "claire", password: "1234" });
+      expect(res.status).toBe(201);
+    });
+    it("[4] responds with the correct user after registering", async () => {
+      const res = await request(server)
+        .post("/api/auth/register")
+        .send({ username: "bob", password: "1234" });
+      expect(res.body).toMatchObject({
+        username: "bob",
+      });
+    });
+    it("[5] responds with the right status and message on missing password", async () => {
+      const res = await request(server)
+        .post("/api/auth/register")
+        .send({ username: "roger" });
+      expect(res.body.message).toMatch(/username and password required/);
+      expect(res.status).toBe(422);
+    });
+    it("[6] responds with the right status and message on missing username", async () => {
+      const res = await request(server)
+        .post("/api/auth/register")
+        .send({ password: "1234" });
+      expect(res.body.message).toMatch(/username and password required/);
+      expect(res.status).toBe(422);
+    });
+    it("[7] responds with the right status and message if password is not a string", async () => {
+      const res = await request(server)
+        .post("/api/auth/register")
+        .send({ username: "roger", password: 1234 });
+      expect(res.body.message).toMatch(/password must be a string/);
+      expect(res.status).toBe(422);
+    });
+    it("[8] responds with the right status and message if username is taken", async () => {
+      await request(server)
+        .post("/api/auth/register")
+        .send({ username: "roger", password: "1234" });
+      const res = await request(server)
+        .post("/api/auth/register")
+        .send({ username: "roger", password: "5678" });
+      expect(res.body.message).toMatch(/username taken/);
+      expect(res.status).toBe(422);
+    });
+  });
   describe("[GET] /api/jokes", () => {
     it("[1] requests without a token are rejected with right status and message", async () => {
       const res = await request(server).get("/api/jokes");
