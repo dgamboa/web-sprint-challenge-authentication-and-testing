@@ -46,6 +46,7 @@ describe("server.js", () => {
       expect(res.body).toMatchObject({
         username: "bob",
       });
+      expect(res.body.password).not.toBeDefined();
     });
     it("[5] responds with the right status and message on missing password", async () => {
       const res = await request(server)

@@ -45,7 +45,8 @@ router.post(
       const user = await db("users")
         .where("username", credentials.username)
         .first();
-      res.status(201).json(user);
+      const userCreated = { id: user.id, username: user.username };
+      res.status(201).json(userCreated);
     } catch (err) {
       next(err);
     }
