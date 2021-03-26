@@ -2,10 +2,10 @@ const db = require("../../data/dbConfig");
 
 module.exports = {
   checkUsernameAvailable,
-  checkValidRegistrationBody,
+  checkValidBody,
 };
 
-function checkValidRegistrationBody(req, res, next) {
+function checkValidBody(req, res, next) {
   const { username, password } = req.body;
 
   if (!username || !password) {

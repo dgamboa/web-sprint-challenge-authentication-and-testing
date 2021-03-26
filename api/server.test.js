@@ -79,6 +79,42 @@ describe("server.js", () => {
       expect(res.status).toBe(422);
     });
   });
+  describe("[POST] /api/auth/login", () => {
+    it("[1] responds with the right message when logging in with valid credentials", async () => {
+      const res = await request(server)
+        .post("/api/auth/login")
+        .send({ username: "roger", password: "1234" });
+      expect(res.body.message).toMatch(/welcome, roger/i)
+    });
+    it("[2] responds with the right status and message when missing username", async () => {
+      const res = await request(server)
+        .post("/api/auth/login")
+        .send({ password: "1234" });
+      expect(res.body.message).toMatch(/username and password required/i)
+      expect(res.status).toBe(422)
+    })
+    it("[3] responds with the right status and message when missing password", async () => {
+      const res = await request(server)
+        .post("/api/auth/login")
+        .send({ username: "roger" });
+      expect(res.body.message).toMatch(/username and password required/i)
+      expect(res.status).toBe(422)
+    })
+    it("[4] responds with the right status and message when username is invalid", async () => {
+      const res = await request(server)
+        .post("/api/auth/login")
+        .send({ username: "rogers", password: "1234" });
+      expect(res.body.message).toMatch(/invalid credentials/i)
+      expect(res.status).toBe(401)
+    })
+    it("[5] responds with the right status and message when password is invalid", async () => {
+      const res = await request(server)
+        .post("/api/auth/login")
+        .send({ username: "roger", password: "5678" });
+      expect(res.body.message).toMatch(/invalid credentials/i)
+      expect(res.status).toBe(401)
+    })
+  });
   describe("[GET] /api/jokes", () => {
     it("[1] requests without a token are rejected with right status and message", async () => {
       const res = await request(server).get("/api/jokes");
