@@ -24,11 +24,11 @@ We will hash the user's password using `bcryptjs`, and use JSON Web Tokens and t
 
 ### Task 1: Project Set Up
 
-- [ ] Fork and clone the repo. Delete your old fork from Github first if you are repeating this Unit.
-- [ ] Open the assignment in Canvas and click on the "Set up git" option.
-- [ ] Follow instructions to set up Codegrade's Webhook and Deploy Key.
-- [ ] Push your first commit: `git commit --allow-empty -m "first commit" && git push`.
-- [ ] Check to see that Codegrade has accepted your git submission.
+- [x] Fork and clone the repo. Delete your old fork from Github first if you are repeating this Unit.
+- [x] Open the assignment in Canvas and click on the "Set up git" option.
+- [x] Follow instructions to set up Codegrade's Webhook and Deploy Key.
+- [x] Push your first commit: `git commit --allow-empty -m "first commit" && git push`.
+- [x] Check to see that Codegrade has accepted your git submission.
 
 For a step-by-step on setting up Codegrade see [this guide.](https://www.notion.so/lambdaschool/Submitting-an-assignment-via-Code-Grade-A-Step-by-Step-Walkthrough-07bd65f5f8364e709ecb5064735ce374)
 
@@ -36,9 +36,9 @@ For a step-by-step on setting up Codegrade see [this guide.](https://www.notion.
 
 Your finished project must include all of the following requirements (further instructions are found inside each file):
 
-- [ ] An authentication workflow with functionality for account creation and login, implemented inside `api/auth/auth-router.js`.
-- [ ] Middleware used to restrict access to resources from non-authenticated requests, implemented inside `api/middleware/restricted.js`.
-- [ ] A minimum of 2 tests per API endpoint, written inside `api/server.test.js`.
+- [x] An authentication workflow with functionality for account creation and login, implemented inside `api/auth/auth-router.js`.
+- [x] Middleware used to restrict access to resources from non-authenticated requests, implemented inside `api/middleware/restricted.js`.
+- [x] A minimum of 2 tests per API endpoint, written inside `api/server.test.js`.
 
 **Notes:**
 
@@ -58,24 +58,37 @@ Your finished project must include all of the following requirements (further in
 
 These goals may or may not be things you have learned in this module but they build on the material you just studied. Time allowing, stretch your limits and see if you can deliver on the following optional goals:
 
-- [ ] Write at least 4 tests per endpoint.
-- [ ] Extract user validation into a separate method and write unit tests for it.
+- [x] Write at least 4 tests per endpoint.
+- [x] Extract user validation into a separate method and write unit tests for it.
 - [ ] Implement authentication using sessions instead of tokens. Build separate auth endpoints & middleware for this to avoid breaking tests.
 
 ## Submission format
 
-- [ ] Submit via Codegrade by committing and pushing any new changes.
-- [ ] Create a pull request to merge `<firstName-lastName>` branch into `main`.
-- [ ] Please don't merge your own pull request and make sure **you are on your own repo**.
-- [ ] Check Codegrade for automated feedback.
-- [ ] Check Codegrade on Monday following the Sprint Challenge for reviewer feedback.
-- [ ] Any changes pushed after the deadline will not receive any feedback.
+- [x] Submit via Codegrade by committing and pushing any new changes.
+- [x] Create a pull request to merge `<firstName-lastName>` branch into `main`.
+- [x] Please don't merge your own pull request and make sure **you are on your own repo**.
+- [x] Check Codegrade for automated feedback.
+- [x] Check Codegrade on Monday following the Sprint Challenge for reviewer feedback.
+- [x] Any changes pushed after the deadline will not receive any feedback.
 
 ## Interview Questions
 
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics.
 
 1. Differences between using _sessions_ or _JSON Web Tokens_ for authentication.
+  1. **Answer:** In session-based authentication, the server stores a logged in user's session and sets a cookie on the client to be sent with every request to the server. Every time the client makes a request, the server can confirm the session id on the cookie matches an active session on the server to validate the request. In JWT-based authentication, the server generates a token and sends it to the client to be stored locally. The client sends the token in the header of each request to the server. The server can check the token to validate the request. JWTs minimize server load and are therefore more scalable. They also avoid cross-domain issues that may run occur with 3rd-party cookies when APIs are served from different domains.
 2. What does `bcryptjs` do to help us store passwords in a secure manner?
+  1. **Answer:**  `bcryptjs` is a library to hash and salt passwords. A hash function converts the input value (i.e. the plain text password) into a seemingly random combination of digits. The hash cannot be reversed but given the same key (i.e. input), it will always generate the same combination of digits (i.e. pure function).
 3. How are unit tests different from integration and end-to-end testing?
+  1. **Answer:** Unit tests test a single function or unit of code, asserts an expected value and compares it to the actual value of the function. Integration tests test modules or functionality that integrates multiple units to generate a result. End-to-end tests test the full user experience of an application.
 4. How does _Test Driven Development_ change the way we write applications and tests?
+  1. **Answer:** Using TDD, we first write a test. The test should fail. Then we write the code that will make the test pass. And finally, we repeat that process. At a high level, it means writing tests before writing application functionality.
+
+
+## Procedure
+
+1. Answer interview questions
+2. Start by running the server and see what is up and down
+3. Then build the authentication functionality (npm i, pull up goby, write code)
+4. Confirm that it works and add a couple of users / authenticate them to get access to users
+5. Write tests
